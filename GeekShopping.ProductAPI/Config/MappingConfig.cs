@@ -6,7 +6,7 @@ namespace GeekShopping.ProductAPI.Config
 {
     public class MappingConfig
     {
-        public static MapperConfiguration RegisterMaps ()
+        public static MapperConfiguration RegisterMaps()
         {
             var MappingConfig = new MapperConfiguration(config=>
             {
