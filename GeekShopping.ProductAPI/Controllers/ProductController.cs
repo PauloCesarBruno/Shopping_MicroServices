@@ -33,7 +33,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductDto>> Create(ProductDto dto)
+        public async Task<ActionResult<ProductDto>> Create([FromBody]ProductDto dto)
         {
             if (dto == null) return BadRequest("Requisição feita de modo equivocado !");
             var product = await _repository.Create(dto);
@@ -42,7 +42,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ProductDto>> Updade(ProductDto dto)
+        public async Task<ActionResult<ProductDto>> Updade([FromBody] ProductDto dto)
         {
             if (dto == null) return BadRequest("Requisição feita de modo equivocado !");
             var product = await _repository.Update(dto);
