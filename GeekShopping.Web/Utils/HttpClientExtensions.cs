@@ -1,4 +1,4 @@
-﻿using Microsoft.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace GeekShopping.Web.Utils
@@ -18,8 +18,8 @@ namespace GeekShopping.Web.Utils
                        $"{response.ReasonPhrase}");
 
             var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return JsonSerializer.Deserialize<T>(dataAsString, new JsonSerializerOptions
-            { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<T>(dataAsString,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
         public static Task<HttpResponseMessage> PostAsJson<T>(
@@ -29,7 +29,7 @@ namespace GeekShopping.Web.Utils
         {
             var dataAsString = JsonSerializer.Serialize(data);
             var content = new StringContent(dataAsString);
-            //content.Headers.ContentType = contentType;
+            content.Headers.ContentType = contentType;
             return httpclient.PostAsJsonAsync(url, content);
         }
 
@@ -40,7 +40,7 @@ namespace GeekShopping.Web.Utils
         {
             var dataAsString = JsonSerializer.Serialize(data);
             var content = new StringContent(dataAsString);
-            //content.Headers.ContentType = contentType;
+            content.Headers.ContentType = contentType;
             return httpclient.PutAsJsonAsync(url, content);
         }
     }
