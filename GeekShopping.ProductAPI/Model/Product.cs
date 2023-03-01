@@ -14,7 +14,8 @@ namespace GeekShopping.ProductAPI.Model
 
         [Column("price")]
         [Required]
-        [Range(1, 10000)] // Entre R$1,00 até R$ 10.000,00
+        [Range(1, 99999.99)] // Valor Mínimo ao Máximo
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [Column("description")]

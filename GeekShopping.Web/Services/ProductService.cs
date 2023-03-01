@@ -31,15 +31,14 @@ namespace GeekShopping.Web.Services
             var response = await _client.PostAsJson(BasePath, model);
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<ProductModel>();
-            else throw new Exception("Something went wrong calling the API");
+            else throw new Exception("Something went wrong when calling API");
         }
-
         public async Task<ProductModel> UpdateProduct(ProductModel model)
         {
             var response = await _client.PutAsJson(BasePath, model);
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<ProductModel>();
-            else throw new Exception("Something went wrong calling the API");
+            else throw new Exception("Something went wrong when calling API");
         }
 
         public async Task<bool> DeleteProductById(long id)
@@ -47,7 +46,7 @@ namespace GeekShopping.Web.Services
             var response = await _client.DeleteAsync($"{BasePath}/{id}");
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<bool>();
-            else throw new Exception("Something went wrong calling the API");           
-        }              
+            else throw new Exception("Something went wrong when calling API");
+        }
     }
 }
