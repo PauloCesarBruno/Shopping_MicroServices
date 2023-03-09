@@ -1,5 +1,8 @@
 ﻿using GeekShopping.ProductAPI.Data.DataTransferObjects;
 using GeekShopping.ProductAPI.Repository;
+using GeekShopping.ProductAPI.Util;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekShopping.ProductAPI.Controllers
@@ -17,6 +20,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductDto>>> FindAll()
         {
             var products = await _repository.FindAll();              
@@ -24,6 +28,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> FindById(long id)
         {
             var product = await _repository.FindById(id);
@@ -33,6 +38,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> Create([FromBody]ProductDto dto)
         {
             if (dto == null) return BadRequest("Requisição feita de modo equivocado !");
@@ -42,6 +48,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> Updade([FromBody] ProductDto dto)
         {
             if (dto == null) return BadRequest("Requisição feita de modo equivocado !");
@@ -51,6 +58,7 @@ namespace GeekShopping.ProductAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _repository.Delete(id);
