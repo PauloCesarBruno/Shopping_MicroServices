@@ -62,7 +62,7 @@ namespace GeekShopping.ProductAPI.Controllers
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _repository.Delete(id);
-            // Se o status for false -> [ if (!status)  ]
+            // Se o status for false -> " if (!status)  "
             if (!status) return BadRequest("Produto " + id + " não foi encontrado !!!");
             return Ok(status);
         }
