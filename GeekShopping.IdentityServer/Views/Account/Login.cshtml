@@ -3,7 +3,7 @@
 <div class="login-page">
     <div class="lead">
         <h1>Login</h1>
-        <p>Choose how to login</p>
+        <p>Entre com o seu login</p>
     </div>
 
     <partial name="_ValidationSummary" />
@@ -15,7 +15,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Local Account</h2>
+                        <h2>Conta Local</h2>
                     </div>
 
                     <div class="card-body">
@@ -36,15 +36,22 @@
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="RememberLogin">
                                         <label class="form-check-label" asp-for="RememberLogin">
-                                            Remember My Login
+                                            Lembrar Meu Login
                                         </label>
                                     </div>
                                 </div>
                             }
-                            <button class="btn btn-primary" name="button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary" name="button" value="login">Logar</button>
+                            <button class="btn btn-secondary" name="button" value="cancel">Cancelar</button>
                         </form>
                     </div>
+                </div>
+
+                <div class="card-footer">
+                    <br/>
+                    <a href="@Url.Action("Register", new {Model.ReturnUrl})">
+                        Novo Usuario ? Criar Conta
+                        </a>
                 </div>
             </div>
         }
