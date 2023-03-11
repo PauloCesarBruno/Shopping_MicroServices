@@ -35,7 +35,7 @@ namespace GeekShopping.Web.Controllers
         public async Task <IActionResult> Login()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); // Aqui eu pego o Tioken do Bearer [ espaço ] Token.
         }
 
         public IActionResult Logout()
