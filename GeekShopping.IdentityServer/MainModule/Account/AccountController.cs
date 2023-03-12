@@ -290,6 +290,10 @@ namespace IdentityServerHost.Quickstart.UI
                         };
                         await _roleManager.CreateAsync(userRole);
                     }
+                    else
+                    {
+                        return RedirectToAction ("Index", "Home");
+                    }
 
                     await _userManager.AddToRoleAsync(user, model.RoleName);
 
