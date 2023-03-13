@@ -18,8 +18,7 @@ namespace GeekShopping.ProductAPI.Controllers
                 ArgumentNullException(nameof(repository));
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet] // FindAll Permite a não autenticação por isso foi retirado o [Athorize].
         public async Task<ActionResult<IEnumerable<ProductDto>>> FindAll()
         {
             var products = await _repository.FindAll();              

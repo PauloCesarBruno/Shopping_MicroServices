@@ -16,11 +16,10 @@ namespace GeekShopping.Web.Controllers
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
-        [Authorize]
+        // ProductIndex Permite a não autenticação por isso foi retirado o [Athorize].
         public async Task <IActionResult> ProductIndex()
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
-            var products = await _productService.FindAllProducts(token);
+            var products = await _productService.FindAllProducts(""); // String Vazia por não precisar do token.
             return View(products);
         }
 
