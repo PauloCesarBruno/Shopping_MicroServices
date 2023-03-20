@@ -11,6 +11,9 @@ namespace GeekShopping.Web.Models
         public string? CategoryName { get; set; }
         public string? ImagemUrl { get; set; }
 
+        [Range(1, 100)]
+        public int Count { get; set; } = 1;
+
         public string? SubstrinName()
         {
             if (Name?.Length < 24) return Name;
