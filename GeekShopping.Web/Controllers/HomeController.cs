@@ -1,4 +1,5 @@
-﻿using GeekShopping.Web.Models;
+﻿using GeekShopping.CartAPI.Data.DataTransferObjects;
+using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -11,12 +12,15 @@ namespace GeekShopping.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductService _productService;
+        private readonly ICartService _cartService;
 
         public HomeController(ILogger<HomeController> logger,
-            IProductService productService)
+            IProductService productService,
+            ICartService cartService)
         {
             _logger = logger;
-            _productService = productService;
+            _productService = productService;   
+            _cartService = cartService;
         }
 
         public async Task<IActionResult> Index()
@@ -24,12 +28,46 @@ namespace GeekShopping.Web.Controllers
             var products = await _productService.FindAllProducts("");
             return View(products);
         }
-
+                           
         [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
             var model = await _productService.FindProductById(id, token);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Details")]
+        [Authorize]
+        public async Task<IActionResult> DetailsPost(ProducViewtModel model)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            CartVieweModel cart = new CartVieweModel()
+            {
+                CartHeader = new CartHeaderViewModel
+                {
+                    UserId = User.Claims.Where(U => U.Type == "sub")?.FirstOrDefault()?.Value   
+                }
+            };
+
+            CartDetailViewModel cartDetail = new CartDetailViewModel()
+            {
+                Count = model.Count,
+                ProductId = model.Id,
+                Product = await _productService.FindProductById(model.Id, token)
+            };
+           
+            List<CartDetailViewModel> cartDetails = new List<CartDetailViewModel>();
+            cartDetails.Add(cartDetail);
+            cart.CartDetails = cartDetails;
+
+            var response = await _cartService.AddItemToCart(cart, token);
+            if (response != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return View(model);
         }
 
