@@ -36,7 +36,7 @@ namespace GeekShopping.CartAPI.Repository
             {
                 _context.CartDetails
                     .RemoveRange(
-                    _context.CartDetails.Where(c=> c.CartHeaderId == cartHeader.Id));
+                    _context.CartDetails.Where(c => c.CartHeaderId == cartHeader.Id));
                 _context.CartHeaders.Remove(cartHeader);
                 await _context.SaveChangesAsync();
                 return true;
@@ -48,14 +48,14 @@ namespace GeekShopping.CartAPI.Repository
         {
             Cart cart = new()
             {
-                CartHeader = await  _context.CartHeaders
-                .FirstOrDefaultAsync(c => c.UserId == userId),
+                CartHeader = await _context.CartHeaders
+        .FirstOrDefaultAsync(c => c.UserId == userId) ?? new CartHeader(),
             };
             cart.CartDetails = _context.CartDetails
                 .Where(c => c.CartHeaderId == cart.CartHeader.Id)
-                .Include(c => c.Product);
+                    .Include(c => c.Product);
             return _mapper.Map<CartDto>(cart);
-        }        
+        }
 
         public async Task<bool> RmoveFromCart(long cartDetailsId)
         {
@@ -120,7 +120,7 @@ namespace GeekShopping.CartAPI.Repository
                 //If CartHeader is not null
                 //Check if CartDetails has same product
                 var cartDetail = await _context.CartDetails.AsNoTracking().FirstOrDefaultAsync(
-                    p => p.ProductId == cart    .CartDetails.FirstOrDefault().ProductId &&
+                    p => p.ProductId == cart.CartDetails.FirstOrDefault().ProductId &&
                     p.CartHeaderId == cartHeader.Id);
 
                 if (cartDetail == null)
