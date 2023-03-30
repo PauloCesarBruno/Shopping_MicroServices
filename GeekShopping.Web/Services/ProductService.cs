@@ -1,7 +1,6 @@
 ﻿using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.IServices;
 using GeekShopping.Web.Utils;
-using Microsoft.AspNetCore.Authorization;
 using System.Net.Http.Headers;
 
 namespace GeekShopping.Web.Services
