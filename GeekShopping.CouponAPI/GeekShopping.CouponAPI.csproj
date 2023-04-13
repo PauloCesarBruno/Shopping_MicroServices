@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <None Remove="Controllers\CartController.cs~RF381ae36.TMP" />
-        <None Remove="Model\Product.cs~RF1ee5775d.TMP" />
     </ItemGroup>
 
     <ItemGroup>

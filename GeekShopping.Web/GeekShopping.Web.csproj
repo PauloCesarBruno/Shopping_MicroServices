@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\CartHeaderViewModel.cs~RF4f398b3.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="Views\Product\ProductCreate.cshtml" />
   </ItemGroup>

@@ -17,28 +17,28 @@ namespace GeekShopping.Web.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public async Task<CartVieweModel> FindCartByUserId(string userId, string token)
+        public async Task<CartViewModel> FindCartByUserId(string userId, string token)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _client.GetAsync($"{BasePath}/find-cart/{userId}");
-            return await response.ReadContentAs<CartVieweModel>();
+            return await response.ReadContentAs<CartViewModel>();
         }
 
-        public async Task<CartVieweModel> AddItemToCart(CartVieweModel model, string token)
+        public async Task<CartViewModel> AddItemToCart(CartViewModel model, string token)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PostAsJson($"{BasePath}/add-cart", model);
             if (response.IsSuccessStatusCode)
-                return await response.ReadContentAs<CartVieweModel>();
+                return await response.ReadContentAs<CartViewModel>();
             else throw new Exception("Something went wrong when calling API");
         }
 
-        public async Task<CartVieweModel> UpdateCart(CartVieweModel model, string token)
+        public async Task<CartViewModel> UpdateCart(CartViewModel model, string token)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PutAsJson($"{BasePath}/update-cart", model);
             if (response.IsSuccessStatusCode)
-                return await response.ReadContentAs<CartVieweModel>();
+                return await response.ReadContentAs<CartViewModel>();
             else throw new Exception("Something went wrong when calling API");
         }
 
@@ -60,7 +60,7 @@ namespace GeekShopping.Web.Services
             else throw new Exception("Something went wrong when calling API");
         }
 
-        public async Task<bool> ApplyCoupon(CartVieweModel model,  string token)
+        public async Task<bool> ApplyCoupon(CartViewModel model,  string token)
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PostAsJson($"{BasePath}/apply-coupon", model);
@@ -69,7 +69,7 @@ namespace GeekShopping.Web.Services
             else throw new Exception("Something went wrong when calling API");
         }
 
-        public async Task<CartVieweModel> Checkout(CartHeaderViewModel cartHeader, string token)
+        public async Task<CartViewModel> Checkout(CartHeaderViewModel cartHeader, string token)
         {
             throw new NotImplementedException();
         }

@@ -44,7 +44,7 @@ namespace GeekShopping.Web.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            CartVieweModel cart = new CartVieweModel()
+            CartViewModel cart = new CartViewModel()
             {
                 CartHeader = new CartHeaderViewModel
                 {
