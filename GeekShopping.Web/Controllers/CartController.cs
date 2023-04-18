@@ -3,6 +3,11 @@ using GeekShopping.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GeekShopping.Web.Controllers
 {
@@ -73,6 +78,12 @@ namespace GeekShopping.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
+        {
+            return View(await FindUserCart());
+        }
+
         private async Task<CartViewModel> FindUserCart()
         {
             var token = await HttpContext.GetTokenAsync("access_token");
@@ -84,18 +95,18 @@ namespace GeekShopping.Web.Controllers
             {
                 if (!string.IsNullOrEmpty(response.CartHeader.CouponCode))
                 {
-                    var coupon = await _couponService
-                        .GetCoupon(response.CartHeader.CouponCode, token);
-                    if (coupon?.CouponCode != null) 
+                    var coupon = await _couponService.
+                        GetCoupon(response.CartHeader.CouponCode, token);
+                    if (coupon?.CouponCode != null)
                     {
                         response.CartHeader.DiscountAmount = coupon.DiscountAmount;
                     }
-                }                                                           
+                }
                 foreach (var detail in response.CartDetails)
                 {
-                    response.CartHeader.PurshaseAmount += (detail.Product.Price * detail.Count);
+                    response.CartHeader.PurchaseAmount += (detail.Product.Price * detail.Count);
                 }
-                response.CartHeader.PurshaseAmount -= response.CartHeader.DiscountAmount;  
+                response.CartHeader.PurchaseAmount -= response.CartHeader.DiscountAmount;
             }
             return response;
         }
