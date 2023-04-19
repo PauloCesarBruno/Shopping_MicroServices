@@ -1,4 +1,5 @@
 ﻿using GeekShopping.CartAPI.Data.DataTransferObjects;
+using GeekShopping.CartAPI.Messages;
 using GeekShopping.CartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,11 +58,24 @@ namespace GeekShopping.CartAPI.Controllers
         }
 
         [HttpDelete("remove-coupon/{userId}")]
-        public async Task<ActionResult<CartDto>> ApplyCoupon(string userId) // Ver se é RemoveCoupon
+        public async Task<ActionResult<CartDto>> ApplyCoupon(string userId)
         {
             var status = await _repository.RemoveCoupon(userId);
             if (!status) return NotFound();
             return Ok(status);
+        }     
+        
+        [HttpPost("checkout")]
+        public async Task<ActionResult<CheckoutHeaderDto>> Checkout (CheckoutHeaderDto Dto) 
+        {
+            var cart = await _repository.FindCartUserId(Dto.UserId);
+            if (cart == null) return NotFound();
+            Dto.CartDetails = cart.CartDetails;
+
+            // Lógica de comunicação com RabbitMQ
+
+
+            return Ok(Dto);
         }
     }
 }
