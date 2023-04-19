@@ -71,6 +71,7 @@ namespace GeekShopping.CartAPI.Controllers
             var cart = await _repository.FindCartUserId(Dto.UserId);
             if (cart == null) return NotFound();
             Dto.CartDetails = cart.CartDetails;
+            Dto.DateTime = DateTime.Now;
 
             // Lógica de comunicação com RabbitMQ
 
