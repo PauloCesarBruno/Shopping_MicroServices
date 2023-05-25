@@ -22,7 +22,7 @@ namespace GeekShopping.CartAPI.RabbitMQSender
 
         public void SendMessage(BaseMessage Message, string queueName)
         {
-            // Criação da Conction Factoring
+            // Criação da Connection Factoring
             var factory = new ConnectionFactory 
             { 
                 HostName = _hostName,
