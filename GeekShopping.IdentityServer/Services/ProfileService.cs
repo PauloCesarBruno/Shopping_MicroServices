@@ -25,7 +25,7 @@ namespace GeekShopping.IdentityServer.Services
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            string? id = context.Subject.GetSubjectId();
+            string id = context.Subject.GetSubjectId();
             ApplicationUser user = await _userManager.FindByIdAsync(id);
             ClaimsPrincipal UserClaimin = await _userClaimsPrincipalFactory
                 .CreateAsync(user);
@@ -54,7 +54,7 @@ namespace GeekShopping.IdentityServer.Services
 
         public async Task IsActiveAsync(IsActiveContext context)
         {
-            string? id = context .Subject.GetSubjectId();
+            string id = context .Subject.GetSubjectId();
             ApplicationUser user = await _userManager.FindByIdAsync(id);
             context.IsActive = user != null;
         }
