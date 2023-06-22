@@ -85,7 +85,7 @@ namespace GeekShopping.Web.Controllers
         [Authorize]
         public async Task <IActionResult> Login()
         {
-            // Aqui eu pego o Tioken do Bearer [ espaço ] Token. (Ex.: Leandro-Admin - Erudio123$).
+            // Aqui eu pego o Tioken do Bearer [ espaço ] Token. (Ex.: Leandro-Admin - Erudio123$)
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             return RedirectToAction(nameof(Index)); 
         }
